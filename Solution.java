@@ -59,7 +59,6 @@ public class Solution {
           localMin = current;
         }
         // If the localMin is found, break innerLoop for the present subtract value.
-        // Applying (..>.. ||..==..) instead of (..>=..) in order to avoid unnecessary double checks at once, 
         else if (current > localMin || current == localMin) {
           break;
         }
