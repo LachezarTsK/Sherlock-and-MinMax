@@ -31,8 +31,6 @@ public class Solution {
   private static int findMinMax(int[] input, int lowest_subtractValue, int highest_subtractValue) {
 
     Arrays.sort(input);
-    int minMax = Integer.MIN_VALUE;
-    int subtractValue_MinMax = 0;
 
     // Corner case one: The highest array value is below, or equal to, the lowest_subtractValue.
     if (input[input.length - 1] <= lowest_subtractValue) {
@@ -45,7 +43,10 @@ public class Solution {
       subtractValue_MinMax = lowest_subtractValue;
       return subtractValue_MinMax;
     }
-
+    
+    int minMax = Integer.MIN_VALUE;
+    int subtractValue_MinMax = 0;
+    
     int startIndex_innerLoop = 0;
     int present_subtractValue = lowest_subtractValue;
     
