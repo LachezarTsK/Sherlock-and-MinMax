@@ -22,8 +22,8 @@ public class Solution {
 
   /**
    * Finds the maximum of all local minimums (MinMax). Each local minimum is the smallest possible
-   * absolute difference between each array element and the current subtract value. The subtract
-   * value range (inclusive) is from lowest_subtractValue to highest_subtractValue.
+   * absolute difference between each array element and the current subtract value. 
+   * The subtract value range (inclusive) is from lowest_subtractValue to highest_subtractValue.
    *
    * @return An integer, representing the subtract value for MinMax. If there are multiple MinMax,
    *         then the smallest subtract value is returned.
