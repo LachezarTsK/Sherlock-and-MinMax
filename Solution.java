@@ -47,12 +47,13 @@ public class Solution {
     }
 
     int startIndex_innerLoop = 0;
-
-    while (lowest_subtractValue <= highest_subtractValue) {
+    int present_subtractValue = lowest_subtractValue;
+    
+    while (present_subtractValue <= highest_subtractValue) {
       int localMin = Integer.MAX_VALUE;
 
       for (int i = startIndex_innerLoop; i < input.length; i++) {
-        int current = Math.abs(input[i] - lowest_subtractValue);
+        int current = Math.abs(input[i] - present_subtractValue);
 
         if (current < localMin) {
           startIndex_innerLoop = i;
@@ -66,10 +67,10 @@ public class Solution {
 
       if (minMax < localMin) {
         minMax = localMin;
-        subtractValue_MinMax = lowest_subtractValue;
+        subtractValue_MinMax = present_subtractValue;
       }
 
-      lowest_subtractValue++;
+      present_subtractValue++;
     }
 
     return subtractValue_MinMax;
