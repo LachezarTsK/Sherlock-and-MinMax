@@ -44,30 +44,33 @@ public class Solution {
     
     int minMax = Integer.MIN_VALUE;
     int subtractValue_minMax = 0;    
-    int startIndex_innerLoop = 0;
     
-    while (lowest_subtractValue <= highest_subtractValue) {
+    int startIndex_innerLoop = 0;
+    int present_subtractValue = lowest_subtractValue;
+        
+    while (present_subtractValue <= highest_subtractValue) {
       int localMin = Integer.MAX_VALUE;
 
       for (int i = startIndex_innerLoop; i < input.length; i++) {
-        int current = Math.abs(input[i] - lowest_subtractValue);
+        int current = Math.abs(input[i] - present_subtractValue);
 
         if (current < localMin) {
           startIndex_innerLoop = i;
           localMin = current;
         }
         // If the localMin is found, break innerLoop for the present subtract value.
-        else if (current >= localMin) {
+        // Applying (..>.. ||..==..) instead of (..>=..) in order to avoid unnecessary double checks at once, 
+        else if (current > localMin || current == localMin) {
           break;
         }
       }
 
       if (minMax < localMin) {
         minMax = localMin;
-        subtractValue_minMax = lowest_subtractValue;
+        subtractValue_minMax = present_subtractValue;
       }
 
-      lowest_subtractValue++;
+      present_subtractValue++;
     }
 
     return subtractValue_minMax;
