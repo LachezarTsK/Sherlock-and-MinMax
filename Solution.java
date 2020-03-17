@@ -58,7 +58,7 @@ public class Solution {
           startIndex_innerLoop = i;
           localMin = current;
         }
-        // If the localMin is found, break innerLoop for current lowest_subtractValue.
+        // If the localMin is found, break innerLoop for the present subtract value.
         else if (current >= localMin) {
           break;
         }
