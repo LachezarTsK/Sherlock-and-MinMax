@@ -34,14 +34,12 @@ public class Solution {
 
     // Corner case one: The highest array value is below, or equal to, the lowest_subtractValue.
     if (input[input.length - 1] <= lowest_subtractValue) {
-      subtractValue_MinMax = highest_subtractValue;
       return subtractValue_MinMax;
     }
 
     // Corner case two: The lowest array value is above, or equal to, the highest_subtractValue.
     if (input[0] >= highest_subtractValue) {
-      subtractValue_MinMax = lowest_subtractValue;
-      return subtractValue_MinMax;
+      return lowest_subtractValue;
     }
     
     int minMax = Integer.MIN_VALUE;
