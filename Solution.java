@@ -21,11 +21,11 @@ public class Solution {
   }
 
   /**
-   * Finds the maximum of all local minimums (MinMax). Each local minimum is the smallest possible
+   * Finds the maximum of all local minimums: minMax. Each local minimum is the smallest possible
    * absolute difference between each array element and the current subtract value. 
    * The subtract value range (inclusive) is from lowest_subtractValue to highest_subtractValue.
    *
-   * @return An integer, representing the subtract value for MinMax. If there are multiple MinMax,
+   * @return An integer, representing the subtract value for minMax. If there are multiple minMax,
    *         then the smallest subtract value is returned.
    */
   private static int findMinMax(int[] input, int lowest_subtractValue, int highest_subtractValue) {
@@ -34,7 +34,7 @@ public class Solution {
 
     // Corner case one: The highest array value is below, or equal to, the lowest_subtractValue.
     if (input[input.length - 1] <= lowest_subtractValue) {
-      return subtractValue_MinMax;
+      return highest_subtractValue;
     }
 
     // Corner case two: The lowest array value is above, or equal to, the highest_subtractValue.
@@ -43,7 +43,7 @@ public class Solution {
     }
     
     int minMax = Integer.MIN_VALUE;
-    int subtractValue_MinMax = 0;
+    int subtractValue_minMax = 0;
     
     int startIndex_innerLoop = 0;
     int present_subtractValue = lowest_subtractValue;
@@ -66,12 +66,12 @@ public class Solution {
 
       if (minMax < localMin) {
         minMax = localMin;
-        subtractValue_MinMax = present_subtractValue;
+        subtractValue_minMax = present_subtractValue;
       }
 
       present_subtractValue++;
     }
 
-    return subtractValue_MinMax;
+    return subtractValue_minMax;
   }
 }
