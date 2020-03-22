@@ -1,7 +1,10 @@
-import java.util.Arrays;
 import java.util.Scanner;
+import java.util.Arrays;
 
-public class Solution {
+public class Check {
+
+  private static int lowest_subtractValue;
+  private static int highest_subtractValue;
 
   public static void main(String[] args) {
 
@@ -12,23 +15,28 @@ public class Solution {
     for (int i = 0; i < numberOfElements; i++) {
       input[i] = scanner.nextInt();
     }
-    int lowest_subtractValue = scanner.nextInt();
-    int highest_subtractValue = scanner.nextInt();
+    lowest_subtractValue = scanner.nextInt();
+    highest_subtractValue = scanner.nextInt();
     scanner.close();
 
-    int result = findMinMax(input, lowest_subtractValue, highest_subtractValue);
+    int result = findMinMax(input);
     System.out.println(result);
   }
 
   /**
    * Finds the maximum of all local minimums: minMax. Each local minimum is the smallest possible
-   * absolute difference between each array element and the current subtract value. 
-   * The subtract value range (inclusive) is from lowest_subtractValue to highest_subtractValue.
+   * absolute difference between each array element and the current_subtractValue. The subtract
+   * value range (inclusive) is from lowest_subtractValue to highest_subtractValue.
+   *
+   * The minMax formed in the above manner will occur at the following points: 
+   * 1. current_subtractValue = (input[i]+inpit[i+1])/2. 
+   * 2. current_subtractValue = lowest_subtractValue.
+   * 3. current_subtractValue = highest_subtractValue.
    *
    * @return An integer, representing the subtract value for minMax. If there are multiple minMax,
    *         then the smallest subtract value is returned.
    */
-  private static int findMinMax(int[] input, int lowest_subtractValue, int highest_subtractValue) {
+  private static int findMinMax(int[] input) {
 
     Arrays.sort(input);
 
@@ -41,37 +49,61 @@ public class Solution {
     if (input[0] >= highest_subtractValue) {
       return lowest_subtractValue;
     }
-    
+
     int minMax = Integer.MIN_VALUE;
-    int subtractValue_minMax = 0;    
-    
-    int startIndex_innerLoop = 0;
-    int present_subtractValue = lowest_subtractValue;
-        
-    while (present_subtractValue <= highest_subtractValue) {
-      int localMin = Integer.MAX_VALUE;
+    int subtractValue_minMax = 0;
 
-      for (int i = startIndex_innerLoop; i < input.length; i++) {
-        int current = Math.abs(input[i] - present_subtractValue);
+    // Corner case three: current_subtractValue = (input[i]+input[i+1])/2 > lowest_subtractValue.
+    int min = checkMinimum_currentSubtractValue_isOutsideRangeBoundary(input, lowest_subtractValue);
+    if (min > minMax) {
+      minMax = min;
+      subtractValue_minMax = lowest_subtractValue;
+    }
 
-        if (current < localMin) {
-          startIndex_innerLoop = i;
-          localMin = current;
-        }
-        // If the localMin is found, break innerLoop for the present subtract value.
-        else if (current > localMin || current == localMin) {
-          break;
-        }
+    // Corner case four: current_subtractValue = (input[i]+input[i+1])/2 < highest_subtractValue.
+    min = checkMinimum_currentSubtractValue_isOutsideRangeBoundary(input, highest_subtractValue);
+    if (min > minMax) {
+      minMax = min;
+      subtractValue_minMax = highest_subtractValue;
+    }
+
+    for (int i = 0; i + 1 < input.length; i++) {
+      int current_subtractValue = (input[i] + input[i + 1]) / 2;
+      min = checkMinimum_currentSubtractValue_isInRangeBoundary(input[i], current_subtractValue);
+      if (min > minMax) {
+        minMax = min;
+        subtractValue_minMax = current_subtractValue;
       }
-
-      if (minMax < localMin) {
-        minMax = localMin;
-        subtractValue_minMax = present_subtractValue;
-      }
-
-      present_subtractValue++;
     }
 
     return subtractValue_minMax;
+  }
+
+  /** 
+  * The method is applied to check for local min at (input[i]+input[i+1])/2. 
+  */
+  private static int checkMinimum_currentSubtractValue_isInRangeBoundary(
+      int array_element, int current_subtractValue) {
+    if (current_subtractValue < lowest_subtractValue
+        || current_subtractValue > highest_subtractValue) {
+      return -1;
+    }
+    return current_subtractValue - array_element;
+  }
+
+  /**
+   * The method is applied to check for local min at lowest_subtractValue / highest_subtractValue.
+   *
+   * To streamline the algorithm, this method has to be distinct from method
+   * 'checkMinimum_currentSubtractValue_isInRangeBoundary' becasue the latter method does not
+   * require an iteration through the array.
+   */
+  private static int checkMinimum_currentSubtractValue_isOutsideRangeBoundary(
+      int input[], int current_subtractValue) {
+    int min = Integer.MAX_VALUE;
+    for (int i = 0; i < input.length; i++) {
+      min = Math.min(min, Math.abs(input[i] - current_subtractValue));
+    }
+    return min;
   }
 }
