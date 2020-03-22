@@ -28,7 +28,7 @@ public class Solution {
    * absolute difference between each array element and the current_subtractValue. The subtract
    * value range (inclusive) is from lowest_subtractValue to highest_subtractValue.
    *
-   * The minMax formed in the above manner will occur at the following points: 
+   * The minMax, formed in the above manner, will occur at the following points: 
    * 1. current_subtractValue = (input[i]+inpit[i+1])/2. 
    * 2. current_subtractValue = lowest_subtractValue.
    * 3. current_subtractValue = highest_subtractValue.
