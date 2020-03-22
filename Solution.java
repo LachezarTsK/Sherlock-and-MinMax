@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.util.Arrays;
 
-public class Check {
+public class Solution {
 
   private static int lowest_subtractValue;
   private static int highest_subtractValue;
